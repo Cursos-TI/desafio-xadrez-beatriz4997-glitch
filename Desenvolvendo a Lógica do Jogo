@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+/*
+    Super Trunfo - Nível Novato
+    Tema: Desenvolvendo a Lógica do Jogo
+    Autor: Maria Beatriz
+    Descrição:
+    Este programa compara duas cartas do Super Trunfo com base em um atributo fixo.
+    Cada carta contém informações de um estado/cidade e seus dados estatísticos.
+*/
+
+// Estrutura que representa uma carta
+typedef struct {
+    char estado[30];
+    char codigo[10];
+    char nomeCidade[50];
+    int populacao;
+    float area;
+    float pib;
+    int pontosTuristicos;
+    float densidadePopulacional;
+    float pibPerCapita;
+} Carta;
+
+// Função que calcula densidade populacional e PIB per capita
+void calcularDados(Carta *carta) {
+    carta->densidadePopulacional = carta->populacao / carta->area;
+    carta->pibPerCapita = carta->pib / carta->populacao;
+}
+
+// Função que compara duas cartas com base em um atributo fixo
+void compararCartas(Carta c1, Carta c2) {
+    // Atributo escolhido para comparação (fixo)
+    char atributo[] = "PIB per Capita";
+
+    printf("\n===== COMPARAÇÃO DE CARTAS (Atributo: %s) =====\n\n", atributo);
+
+    printf("Carta 1 - %s (%s): R$ %.2f\n", c1.nomeCidade, c1.estado, c1.pibPerCapita);
+    printf("Carta 2 - %s (%s): R$ %.2f\n\n", c2.nomeCidade, c2.estado, c2.pibPerCapita);
+
+    // Comparação: maior PIB per capita vence
+    if (c1.pibPerCapita > c2.pibPerCapita) {
+        printf("Resultado: Carta 1 venceu!\n");
+    } else if (c2.pibPerCapita > c1.pibPerCapita) {
+        printf("Resultado: Carta 2 venceu!\n");
+    } else {
+        printf("Resultado: Empate!\n");
+    }
+}
+
+int main() {
+    // Duas cartas pré-definidas (sem entrada do usuário)
+    Carta carta1 = {"São Paulo", "A1", "São Paulo", 12300000, 1521.11, 699000000000.0, 50};
+    Carta carta2 = {"Rio de Janeiro", "B2", "Rio de Janeiro", 6000000, 1200.27, 400000000000.0, 35};
+
+    // Calcula os dados derivados
+    calcularDados(&carta1);
+    calcularDados(&carta2);
+
+    // Exibe os dados das cartas
+    printf("===== CARTAS CADASTRADAS =====\n\n");
+
+    printf("Carta 1: %s (%s)\n", carta1.nomeCidade, carta1.estado);
+    printf("População: %d\n", carta1.populacao);
+    printf("Área: %.2f km²\n", carta1.area);
+    printf("PIB: R$ %.2f\n", carta1.pib);
+    printf("Pontos Turísticos: %d\n", carta1.pontosTuristicos);
+    printf("Densidade Populacional: %.2f hab/km²\n", carta1.densidadePopulacional);
+    printf("PIB per Capita: R$ %.2f\n\n", carta1.pibPerCapita);
+
+    printf("Carta 2: %s (%s)\n", carta2.nomeCidade, carta2.estado);
+    printf("População: %d\n", carta2.populacao);
+    printf("Área: %.2f km²\n", carta2.area);
+    printf("PIB: R$ %.2f\n", carta2.pib);
+    printf("Pontos Turísticos: %d\n", carta2.pontosTuristicos);
+    printf("Densidade Populacional: %.2f hab/km²\n", carta2.densidadePopulacional);
+    printf("PIB per Capita: R$ %.2f\n", carta2.pibPerCapita);
+
+    // Realiza a comparação
+    compararCartas(carta1, carta2);
+
+    return 0;
+}
